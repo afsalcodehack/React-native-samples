@@ -79,7 +79,7 @@ var Watermelon = React.createClass({
     return (
       <Navigator
         debugOverlay={false}
-        initialRoute={{title: 'Dashboard', id: 'pos', sceneConfig: Navigator.SceneConfigs.FloatFromRight,}}
+        initialRoute={{title: 'Dashboard', id: 'dashboard', sceneConfig: Navigator.SceneConfigs.FloatFromRight,}}
         configureScene={this.configureScene}
         renderScene={this.renderScene}
       />
