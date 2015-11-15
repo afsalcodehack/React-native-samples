@@ -9,6 +9,9 @@ var React = require('react-native');
 var Animatable = require('react-native-animatable');
 var Icon = require('react-native-vector-icons/FontAwesome');
 
+import PointOfSale from '../pos/pos';
+import WaiterScreen from '../pos/waiterScreen';
+
 var {
   AppRegistry,
   StyleSheet,
@@ -25,7 +28,10 @@ const TILE_HEIGHT = 120;
 const TILE_WIDTH = 120;
 const TILE_MARGIN = 10
 
-export class Dashboard extends React.Component{
+export class Dashboard extends React.Component {
+  onTilePress(route) {
+    this.props.navigator.push(route);
+  }
   render() {
     return (
       <View style={styles.dashboardContainer}>
@@ -34,14 +40,14 @@ export class Dashboard extends React.Component{
           <View>
             <View style={styles.horizontal}>
 
-              <TouchableWithoutFeedback onPress={()=>{this.onTilePress(Routes.meeting)}}>
+              <TouchableWithoutFeedback onPress={()=>{this.onTilePress({ component: PointOfSale, title: 'Point Of Sale' })}}>
                   <Animatable.View animation="slideInDown" duration={500} style={[styles.tile,styles.small, {paddingTop: 20}]}>
                       <Icon name="home" size={65} color="#00869C" style={{marginLeft: 10, flex: 1}}/>
                       <Text>Home</Text>
                   </Animatable.View>
               </TouchableWithoutFeedback>
 
-              <TouchableWithoutFeedback onPress={()=>{this.onTilePress(Routes.schedule)}}>
+              <TouchableWithoutFeedback onPress={()=>{this.onTilePress({ component: WaiterScreen, title: 'Waiter' })}}>
                   <Animatable.View  animation="slideInDown" duration={500} style={[styles.tile,styles.small, {paddingTop: 20}]}>
                       <Icon name="calendar-check-o" size={65} color="#DA522C" style={{marginLeft: 10, flex: 1}}/>
                       <Text>Schedule</Text>
@@ -79,7 +85,7 @@ export class Dashboard extends React.Component{
           </View>
           <View>
             <View style={[styles.tile,styles.extraLarge, {flexDirection: 'column', alignItems:'stretch', padding: 10}]}>
-              <Image source={require('image!chart')} style={{flex: 1, width: null, height: 100}}>
+              <Image source={require('../../resources/images/chart.png')} style={{flex: 1, width: null, height: 100}}>
               </Image>
             </View>
             <View style={styles.horizontal}>
@@ -263,7 +269,7 @@ class NotificationTile extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Image source={require('image!fancy_separator')} style={{width: null, height: 30}} />
+                <Image source={require('../../resources/images/fancy_separator.png')} style={{width: null, height: 30}} />
                 <View style={styles.tabStripWrapper}>
                     <TouchableWithoutFeedback onPress={this.onTabPress.bind(this, 0)}>
                         <View style={[styles.tab, this.state.selectedTabIndex == 0 ? styles.tabSelected : null]}>

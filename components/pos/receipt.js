@@ -1,54 +1,14 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @author Jasim
- */
-'use strict';
-
-var React = require('react-native');
-var Animatable = require('react-native-animatable');
-var Icon = require('react-native-vector-icons/FontAwesome');
-
-var {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableHighlight,
-  TextInput,
-  TouchableWithoutFeedback,
-  ListView,
-} = React;
-
-
-class PointOfSale extends React.Component{
-    constructor(args) {
-        super(args);
-        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+class Receipt extends React.Component {
+	constructor(args) {
+		super(args);
+		var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: dataSource.cloneWithRows(data)
+            dataSource: dataSource.cloneWithRows(this.props.data)
         }
-    }
-  render() {
-    return (
-      <View style={styles.container}>
-          <View style={styles.categoryBar}>
-             <Category />
-          </View>
-          <View style={{ width: 450, backgroundColor: 'whitesmoke', alignItems:'stretch', flexDirection: 'column', borderRightColor:'#766946', borderRightWidth: 5}}>
-              <View style={{ backgroundColor: '#FFF', height: 50, padding: 10 }}>
-                  <Text style={{fontSize: 25}}>Title Goes Here...</Text>
-              </View>
-              <View style={{ backgroundColor: '#FFF', padding: 5, borderTopColor: '#F4F4F4',borderTopWidth: 1 }}>
-                  <TextInput placeholder="Search Something Here..." />
-              </View>
-              <View style={{alignItems: 'center', flex: 1}}>
-                  <Dishes />
-              </View>
-          </View>
-
-          <View style={{flex:1, flexDirection: 'column', alignItems:'stretch', backgroundColor: 'whitesmoke',padding: 10}}>
+	}
+	render() {
+		return (
+		<View style={{flex:1, flexDirection: 'column', alignItems:'stretch', backgroundColor: 'whitesmoke',padding: 10}}>
               <View style={{borderWidth: 1, borderColor: '#DFE0E2', flexDirection: 'column', alignItems: 'stretch', backgroundColor: '#FBFBFB', padding: 10}}>
                   <View style={{alignItems: 'center'}}>
                       <Text style={{fontSize: 20}}> Order Number: #3659556</Text>
@@ -142,102 +102,6 @@ class PointOfSale extends React.Component{
                   </View>
               </View>
           </View>
-      </View>
-    );
-  }
-  renderRow(rowData, sectionID: number, rowID: number) {
-      return (
-          <View style={{borderBottomStyle: 'dashed', borderBottomWidth: 1, borderBottomColor: "#D6D6D6",padding: 8, flexDirection: 'row'}}>
-              <Text style={{ flex: 2}}>{rowData.name}</Text>
-              <Text style={{ flex: 0.5}}>{rowID + 1}</Text>
-              <Text style={{ flex: 0.5}}>{rowID + 1 * 25.25}</Text>
-              <Text style={{ flex: 0.5}}>{ rowID + 1 * 26.2563 }</Text>
-          </View>
-     );
-  }
+	);
+}	
 }
-
-var data =[
-    { name: 'One', icon: 'globe'},
-    { name: 'Two', icon: 'pencil'},
-    { name: 'Three', icon: 'umbrella' },
-    { name: 'Four', icon: 'car'},
-    { name: 'Five', icon: 'cog' },
-    { name: 'Six', icon: 'link'},
-    { name: 'Seven', icon: 'file-text'}
-]
-
-var _data = [
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-];
-class Dishes extends React.Component {
-    constructor(args) {
-        super(args);
-        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
-        this.state = {
-            dataSource: dataSource.cloneWithRows(_data)
-        }
-    }
-    render() {
-        return (<ListView dataSource={this.state.dataSource} renderRow={this.renderRow} style={{flex: 1}} />)
-    }
-    renderRow(rowData, sectionID: number, rowID: number) {
-        return (
-            <View style={{flexDirection:'row', alignItems:'center'}}>
-                {
-                    (()=>{
-                        var items = [];
-                        rowData.Category.map(() => {
-                            items.push(<View style={{ width: 120, height: 120, backgroundColor: '#FFF', margin: 8}} />);
-                        });
-
-                        return items;
-                    })()
-                }
-
-            </View>
-       );
-    }
-}
-
-class RecieptView extends React.Component {
-    constructor(args) {
-        super(args);
-    }
-    render() {
-        return (
-            <Image source={require('image!pos_bg')} style={{width: 500, height: 500}} >
-            </Image>
-        );
-    }
-}
-
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    categoryBar: {
-        width: 90,
-        borderRightColor: '#CCC',
-        borderRightWidth: 1
-    },
-    button: {
-        borderBottomColor: '#CCC',
-        borderBottomWidth: 1,
-        flexDirection: 'column',
-        margin: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 10
-    },
-});
-
-module.exports = PointOfSale;

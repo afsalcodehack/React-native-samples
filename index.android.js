@@ -5,7 +5,12 @@
  */
 'use strict';
 
-var React = require('react-native');
+import React from 'react-native';
+import { Titlebar } from './components/common/titlebar';
+import { Infobar } from './components/common/infobar';
+import { Dashboard } from './components/dashboard/dashboard';
+
+
 var {
   AppRegistry,
   StyleSheet,
@@ -16,12 +21,8 @@ var {
   BackAndroid,
 } = React;
 
-import { Titlebar } from './components/common/titlebar';
-import { Infobar } from './components/common/infobar';
-import { Dashboard } from './components/dashboard/dashboard';
-import { PointOfSale } from './components/pos/pos';
-
 let _navigator  =  null;
+let _initialRoute = { title: 'Dashboard', id: 'dashboard', component: Dashboard };
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator.getCurrentRoutes().length === 1  ) {
@@ -50,25 +51,19 @@ var Watermelon = React.createClass({
   },
 
   renderScene: function (route, navigator) {
-      let scene = null;
+      let Component = null;
       _navigator = navigator;
-      switch(route.id) {
-          case 'login':
-            scene = (<Login navigator={_navigator} />);
-            break;
-          case 'dashboard':
-            scene = (<Dashboard navigator={_navigator} />);
-            break;
-          case 'pos':
-            scene = (<PointOfSale navigator={_navigator} />);
-            break;
+     
+      if(route.component) {
+        Component = route.component;
       }
+
       let appScene = (
           <View style={styles.container}>
              <Titlebar  />
              <Infobar roomNo={this.state.roomNo} navigator={_navigator}/>
              <View style={styles.appContainer}>
-                {scene}
+                <Component navigator={navigator} {...route.props} />
             </View>
           </View>
       );
@@ -79,10 +74,9 @@ var Watermelon = React.createClass({
     return (
       <Navigator
         debugOverlay={false}
-        initialRoute={{title: 'Dashboard', id: 'pos', sceneConfig: Navigator.SceneConfigs.FloatFromRight,}}
+        initialRoute={_initialRoute}
         configureScene={this.configureScene}
-        renderScene={this.renderScene}
-      />
+        renderScene={this.renderScene} />
     );
   }
 });
@@ -107,6 +101,5 @@ var styles = StyleSheet.create({
     width: 5
   }
 });
-
 
 AppRegistry.registerComponent('Watermelon', () => Watermelon);

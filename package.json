@@ -6,9 +6,8 @@
     "start": "node node_modules/react-native/packager/packager.js"
   },
   "dependencies": {
-    "react-native": "^0.13.2",
+    "react-native": "^0.14.1",
     "react-native-animatable": "^0.3.0",
-    "react-native-vector-icons": "^0.8.3",
-    "react-native-android-iconify": "^1.0.3"
+    "react-native-vector-icons": "^0.8.3"
   }
 }
