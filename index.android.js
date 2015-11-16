@@ -53,7 +53,7 @@ var Watermelon = React.createClass({
   renderScene: function (route, navigator) {
       let Component = null;
       _navigator = navigator;
-     
+
       if(route.component) {
         Component = route.component;
       }

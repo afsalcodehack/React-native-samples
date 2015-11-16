@@ -30,12 +30,8 @@ class PointOfSale extends React.Component{
         }
     }
     onItemPress() {
-
-
-      
-
-
-      posData.push({ name: 'Test', icon: 'list' });
+      //var newdata = update(posData,{$push:{ name: 'Test', icon: 'list'}});
+       posData.splice(0,0,{ name: 'Test', icon: 'list' });
       this.setState({ dataSource: dataSource.cloneWithRows(posData)})
     }
   render() {
@@ -178,12 +174,12 @@ var data =[
 ]
 
 var _data = [
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
-    { Category: [1, 2, 3]},
+    { Category: [{name:'1', image:'http://pngimg.com/upload/burger_sandwich_PNG4135.png',price:''}, {name:'1', image:'',price:''}, {name:'1', image:'',price:''}]},
+    { Category: [{name:'2', image:'',price:''},{name:'1', image:'',price:''},{name:'1', image:'',price:''}]},
+    { Category: [{name:'3', image:'',price:''},{name:'1', image:'',price:''},{name:'1', image:'',price:''}]},
+    { Category: [{name:'4', image:'',price:''},{name:'1', image:'',price:''},{name:'1', image:'',price:''}]},
+    { Category: [{name:'5', image:'',price:''},{name:'1', image:'',price:''},{name:'1', image:'',price:''}]},
+    { Category: [{name:'6', image:'',price:''},{name:'1', image:'',price:''},{name:'1', image:'',price:''}]},
 ];
 class Dishes extends React.Component {
     constructor(args) {
@@ -203,10 +199,13 @@ class Dishes extends React.Component {
                 {
                     (()=>{
                         var items = [];
-                        rowData.Category.map(() => {
+                        rowData.Category.map((itm) => {
                             items.push(
                               <TouchableHighlight onPress={this.props.onItemPress}>
-                                <View style={{ width: 120, height: 120, backgroundColor: '#FFF', margin: 8}} />
+                                <View style={{ width: 120, height: 120, backgroundColor: '#FFF', margin: 8}}>
+                                  <Image source={{uri: itm.image}} style={{width:120,height:120}}/>
+                                  <Text>{itm.name}</Text>
+                                </View>
                               </TouchableHighlight>
                             );
                         });
