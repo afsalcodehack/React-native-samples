@@ -8,7 +8,7 @@
 var React = require('react-native');
 var Animatable = require('react-native-animatable');
 var Icon = require('react-native-vector-icons/FontAwesome');
-
+var Category = require('./category');
 var {
   AppRegistry,
   StyleSheet,
@@ -21,14 +21,22 @@ var {
   ListView,
 } = React;
 
-
+var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class PointOfSale extends React.Component{
     constructor(args) {
         super(args);
-        var dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: dataSource.cloneWithRows(data)
+            dataSource: dataSource.cloneWithRows(posData)
         }
+    }
+    onItemPress() {
+
+
+      
+
+
+      posData.push({ name: 'Test', icon: 'list' });
+      this.setState({ dataSource: dataSource.cloneWithRows(posData)})
     }
   render() {
     return (
@@ -44,7 +52,7 @@ class PointOfSale extends React.Component{
                   <TextInput placeholder="Search Something Here..." />
               </View>
               <View style={{alignItems: 'center', flex: 1}}>
-                  <Dishes />
+                  <Dishes onItemPress={this.onItemPress.bind(this)} />
               </View>
           </View>
 
@@ -157,6 +165,8 @@ class PointOfSale extends React.Component{
   }
 }
 
+var posData=[];
+
 var data =[
     { name: 'One', icon: 'globe'},
     { name: 'Two', icon: 'pencil'},
@@ -185,7 +195,7 @@ class Dishes extends React.Component {
         }
     }
     render() {
-        return (<ListView dataSource={this.state.dataSource} renderRow={this.renderRow} style={{flex: 1}} />)
+        return (<ListView dataSource={this.state.dataSource} renderRow={this.renderRow.bind(this)} style={{flex: 1}} />)
     }
     renderRow(rowData, sectionID: number, rowID: number) {
         return (
@@ -194,7 +204,11 @@ class Dishes extends React.Component {
                     (()=>{
                         var items = [];
                         rowData.Category.map(() => {
-                            items.push(<View style={{ width: 120, height: 120, backgroundColor: '#FFF', margin: 8}} />);
+                            items.push(
+                              <TouchableHighlight onPress={this.props.onItemPress}>
+                                <View style={{ width: 120, height: 120, backgroundColor: '#FFF', margin: 8}} />
+                              </TouchableHighlight>
+                            );
                         });
 
                         return items;
